@@ -1,6 +1,6 @@
 CREATE TABLE product
 (
-    product_id  bigint auto_increment PRIMARY KEY,
+    product_id  BINARY(16) PRIMARY KEY,
     product_name VARCHAR(20) NOT NULL,
     category    VARCHAR(50) NOT NULL,
     price   bigint NOT NULL,
