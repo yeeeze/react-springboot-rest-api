@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.example.coffee.JdbcUtils.toLocalDateTime;
+import static com.example.coffee.JdbcUtils.toUUID;
 
 @Repository
 public class ProductJdbcRepository implements ProductRepository {
@@ -29,7 +30,7 @@ public class ProductJdbcRepository implements ProductRepository {
     @Override
     public Product insert(Product product) {
         int update = jdbcTemplate.update("INSERT INTO product(product_id, product_name, category, price, description, created_at, updated_at)" +
-                " VALUES(:productId, :productName, :category, :price, :description, :createdAt, :updatedAt)", toParamMap(product));
+                " VALUES(UUID_TO_BIN(:productId), :productName, :category, :price, :description, :createdAt, :updatedAt)", toParamMap(product));
         if (update != 1) {
             throw new RuntimeException("noting was inserted");
         }
@@ -52,10 +53,10 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> findById(Long productId) {
+    public Optional<Product> findById(UUID productId) {
         try {
             return Optional.of(
-                    jdbcTemplate.queryForObject("SELECT * FROM product WHERE product_id = :productId",
+                    jdbcTemplate.queryForObject("SELECT * FROM product WHERE product_id = UUID_TO_BIN(:productId)",
                             Collections.singletonMap("productId", productId), productRowMapper)
             );
         } catch (EmptyResultDataAccessException e) {
@@ -89,7 +90,7 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     private static final RowMapper<Product> productRowMapper = (resultSet, i) -> {
-        Long productId = resultSet.getLong("product_id");
+        UUID productId = toUUID(resultSet.getBytes("product_id"));
         String productName = resultSet.getString("product_name");
         Category category = Category.valueOf(resultSet.getString("category"));
         Long price = resultSet.getLong("price");

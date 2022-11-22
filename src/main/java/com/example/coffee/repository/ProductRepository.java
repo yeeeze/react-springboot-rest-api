@@ -5,6 +5,7 @@ import com.example.coffee.model.Product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ProductRepository {
 
@@ -14,7 +15,7 @@ public interface ProductRepository {
 
     Product update(Product product);
 
-    Optional<Product> findById(Long productId);
+    Optional<Product> findById(UUID productId);
 
     Optional<Product> findByName(String productName);
 

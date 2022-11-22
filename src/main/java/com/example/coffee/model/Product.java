@@ -1,9 +1,10 @@
 package com.example.coffee.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Product {
-    private final Long productId;
+    private final UUID productId;
     private String productName;
     private Category category;
     private Long price;
@@ -11,7 +12,7 @@ public class Product {
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Product(Long productId, String productName, Category category, long price) {
+    public Product(UUID productId, String productName, Category category, long price) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -20,7 +21,7 @@ public class Product {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Product(Long productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Product(UUID productId, String productName, Category category, long price, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -30,7 +31,7 @@ public class Product {
         this.updatedAt = updatedAt;
     }
 
-    public Long getProductId() {
+    public UUID getProductId() {
         return productId;
     }
 

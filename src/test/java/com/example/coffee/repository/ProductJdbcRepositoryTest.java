@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
@@ -49,7 +50,7 @@ class ProductJdbcRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
-    private static final Product newProduct = new Product(1L, "new-product", Category.COFFEE_BEAN_PACKAGE, 1000);
+    private static final Product newProduct = new Product(UUID.randomUUID(), "new-product", Category.COFFEE_BEAN_PACKAGE, 1000);
 
     @Test
     @Order(1)
